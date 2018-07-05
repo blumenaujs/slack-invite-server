@@ -75,3 +75,5 @@ typings/
 # Babel generated files
 dist/
 
+# Live Share
+.vs/

@@ -1,36 +1,27 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import HttpStatus from 'http-status';
+import Koa from 'koa';
+import cors from '@koa/cors';
+import bodyparser from 'koa-bodyparser';
 import Router from './routes';
 
-const app = express();
+const app = new Koa();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyparser());
+Router.prefix('/api');
 
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
-
-app.use('/api', cors({
-  origin: false,
-}), Router);
-
-app.set('port', process.env.port || process.env.PORT || 8095);
-
-app.use((request, response, next) => {
-  const err = new Error('Not Found');
-  err.status = HttpStatus.NOT_FOUND;
-  next(err);
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = err.statusCode || err.status || 500;
+    ctx.body = {
+      message: err.message,
+    };
+    console.log(err);
+  }
 });
 
-app.use((err, request, response) => {
-  response
-    .status(err.status || HttpStatus.INTERNAL_SERVER_ERROR)
-    .json({
-      err: err.message,
-    });
-});
+app.use(Router.routes());
+
 
 export default app;

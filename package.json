@@ -11,23 +11,25 @@
     "start": "node dist",
     "start-babel": "babel-node src",
     "predev": "npm run linter",
-    "dev": "cross-env-shell PORT=8080 \"nodemon --exec npm run start-babel\"",
+    "dev": "nodemon --exec npm run start-babel",
     "test": ""
   },
   "author": "Iago Laguna<iagolaguna.83@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^2.2.1",
+    "@types/koa__cors": "^2.2.2",
     "axios": "^0.18.0",
-    "babel-preset-env": "^1.7.0",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "http-status": "^1.2.0"
+    "koa": "^2.5.1",
+    "koa-body": "^4.0.4",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "dotenv": "^6.0.0"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",

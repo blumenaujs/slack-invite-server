@@ -1,19 +1,18 @@
-import express from 'express';
+import Router from 'koa-router';
 import axios from 'axios';
 
-const router = express.Router();
+const router = new Router();
 
-const TOKEN = 'xoxp-251708891510-276435298546-392779355557-e90fb2c20a619063dffd9cd2140842fa';
-
-router.get('/status', (req, res) => {
-  res.json({ message: 'OK' });
+router.get('/status', (ctx) => {
+  ctx.response.body = { message: 'OK' };
 });
 
-router.post('/invite', async (req, res) => {
-  console.log(req.body.email);
-  const url = `https://slack.com/api/users.admin.invite?token=${TOKEN}&email=${req.body.email}`;
+router.post('/invite', async (ctx) => {
+  console.log(ctx.request.body);
+  const url = `https://slack.com/api/users.admin.invite?token=${process.env.TOKEN}&email=${ctx.request.body.email}`;
   const response = await axios.get(url);
-  res.status(response.status).json(response.data);
+  ctx.response.status = response.status;
+  ctx.response.body = response.data;
 });
 
 export default router;
