@@ -1,27 +1,17 @@
 import Koa from 'koa';
 import cors from '@koa/cors';
 import bodyparser from 'koa-bodyparser';
-import Router from './routes';
+
+import routes from './routes';
+import { errorHandler, notFoundHandler } from './middleware';
 
 const app = new Koa();
 
-app.use(cors());
-app.use(bodyparser());
-Router.prefix('/api');
-
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    ctx.status = err.statusCode || err.status || 500;
-    ctx.body = {
-      message: err.message,
-    };
-    console.log(err);
-  }
-});
-
-app.use(Router.routes());
-
+app
+  .use(errorHandler)
+  .use(cors())
+  .use(bodyparser())
+  .use(routes)
+  .use(notFoundHandler);
 
 export default app;

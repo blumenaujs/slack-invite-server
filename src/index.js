@@ -1,7 +1,12 @@
 import dotenv from 'dotenv';
 import app from './app';
+import logger from './utils/logger';
 
 dotenv.config();
 
-const server = app.listen(process.env.port || process.env.PORT || 8095);
-console.log(`server running at port ${server.address().port}`);
+const { port, PORT } = process.env;
+const serverPort = port || PORT || 8095;
+
+app.listen(serverPort);
+
+logger.info(`Server running. Port => ${serverPort}`);
