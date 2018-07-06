@@ -9,7 +9,7 @@ const app = new Koa();
 
 app
   .use(errorHandler)
-  .use(cors())
+  .use(cors({ credentials: true }))
   .use(bodyparser())
   .use(routes)
   .use(notFoundHandler);
