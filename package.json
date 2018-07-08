@@ -25,6 +25,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "dotenv": "^6.0.0",
+    "http-status": "^1.2.0",
     "koa": "^2.5.1",
     "koa-body": "^4.0.4",
     "koa-bodyparser": "^4.2.1",
