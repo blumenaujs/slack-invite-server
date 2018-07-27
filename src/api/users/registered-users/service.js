@@ -2,10 +2,10 @@ import HttpStatus from 'http-status';
 import { SLACK_ERRORS } from '../../errors/slack-erros'
 
 export function validateRegisteredUsersCount (data) {
-  return data.ok ? registerUsersCountSucess(data) : registerUsersCountError(data.error)
+  return data.ok ? usersCountSuccess(data) : usersCountError(data.error)
 }
 
-function registerUsersCountSucess (data) {
+function usersCountSuccess (data) {
   /*
     Slack's API also returns the 'slackbot', which is not a user,
     the 'slackbot' comes with the flag 'is_bot' setted as false
@@ -17,7 +17,7 @@ function registerUsersCountSucess (data) {
   return { body, status }
 }
 
-function registerUsersCountError (slackError) {
+function usersCountError (slackError) {
   const { errorMessage, status } = SLACK_ERRORS[slackError];
   const body = { errorMessage };
 
