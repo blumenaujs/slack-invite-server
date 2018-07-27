@@ -6,8 +6,11 @@ export function validateRegisteredUsersCount (data) {
 }
 
 function registerUsersCountSucess (data) {
-  // Slack's API also returns the 'slackbot', which is not a user
-  const count = data.members.filter(user => !user.deleted).length - 1;
+  /*
+    Slack's API also returns the 'slackbot', which is not a user,
+    the 'slackbot' comes with the flag 'is_bot' setted as false
+  */
+  const count = data.members.filter(user => !user.deleted && !user.is_bot).length - 1;
   const body = { count };
   const status = HttpStatus.OK;
 
